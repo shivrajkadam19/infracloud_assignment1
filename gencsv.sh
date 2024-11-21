@@ -2,7 +2,7 @@
 # Script to generate a CSV file with specified indices
 start=$1
 end=$2
-output_file="inputdata"
+output_file="inputFile"
 
 # Validate input
 if [[ -z "$start" || -z "$end" || "$start" -ge "$end" ]]; then

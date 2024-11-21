@@ -1,10 +1,11 @@
 services:
   csvserver:
     image: infracloudio/csvserver:latest
+    container_name: csvserver
     ports:
       - "9300:9300"
     volumes:
-      - ./inputdata:/csvserver/inputdata
+      - ./inputFile:/csvserver/inputdata
     environment:
       - CSVSERVER_BORDER=Orange
   prom-server:

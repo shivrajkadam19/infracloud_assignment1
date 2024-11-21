@@ -20,3 +20,22 @@ docker run -d --name csvserver -v D:/infracloud_assignment/solution/inputdata:/c
 
 docker compose up -d 
 docker compose down
+
+
+
+<? >
+
+# CSVServer Solution
+
+This repository contains the solution to the CSVServer assignment. Follow the steps outlined below to replicate the solution.
+
+---
+
+## Part I: Running CSVServer
+
+### Steps Performed
+
+1. Pulled the CSVServer container image:
+   ```bash
+   docker pull infracloudio/csvserver:latest
+2. Determined that the container required an input file (inputFile) to function correctly.
