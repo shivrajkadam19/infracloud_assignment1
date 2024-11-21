@@ -12,10 +12,10 @@ error find
 
 
 
-docker run -d --name csvserver -v D:/infracloud_assignment/solution/inputdata:/csvserver/inputdata infracloudio/csvserver:latest
+docker run -d --name csvserver -v D:/infracloud_assignment/infracloud_assignment1/solution/inputdata:/csvserver/inputdata infracloudio/csvserver:latest
 
 final command with env and port 
-docker run -d --name csvserver -v D:/infracloud_assignment/solution/inputdata:/csvserver/inputdata -p 9393:9393 -e CSVSERVER_BORDER=Orange infracloudio/csvserver:latest
+docker run -d --name csvserver -v D:/infracloud_assignment/infracloud_assignment1/solution/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER=Orange infracloudio/csvserver:latest
 
 
 docker compose up -d 
