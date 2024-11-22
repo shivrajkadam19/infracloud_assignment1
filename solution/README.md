@@ -1,18 +1,17 @@
-# CSVServer Assignment Solution
+# csvserver Assignment Solution
 
-This document details the steps to get the `csvserver` application running and ready for production. Follow the outlined instructions to replicate the solution on a machine with Docker and Docker Compose installed.
+This document provides a structured approach to deploying and configuring the `csvserver` application, ensuring proper functionality and integration with Prometheus for monitoring. All steps are clearly outlined for replication on systems equipped with Docker and Docker Compose.
 
 ## Environment Setup
-
+Pull necessary Docker images
 ```sh
-# Pull necessary Docker images
 docker pull infracloudio/csvserver:latest
 docker pull prom/prometheus:v2.45.2
 ```
 
-## Part I: Running the CSVServer Application
+## Part I: CSVServer Deployment
 ### Step 1: Run the CSVServer Container
-Attempt to run the csvserver image:
+Attempted to run the csvserver container:
 ```sh
 docker run -d --name csvserver infracloudio/csvserver:latest
 ```
@@ -21,47 +20,59 @@ Check the logs if the container fails:
 docker logs csvserver
 ```
 Issue Found:
-The container requires an input file named inputFile with comma-separated values.
+The container failed due to a missing input file (```inputFile```) with comma-separated values.
 
-### Step 2: Generate the Input File
-Create a script ```gencsv.sh``` to generate the required ```inputFile```. The script takes two arguments: start index and end index, and generates a CSV file with random values.
-```gencsv.sh```
-Make the script executable and generate the file:
+```error while reading the file "/csvserver/inputdata": open /csvserver/inputdata: no such file or directory```
+
+### Step 2: Generating the Input File
+To overcome this error Create a script ```gencsv.sh``` to generate the required ```inputFile```. The script takes two arguments: start index and end index, and generates a CSV file with random values.
+
+Following commands are for Making the script executable and generate the file:
 ```sh
 chmod +x gencsv.sh
 ./gencsv.sh 2 8
 ```
+
 ### Step 3: Run the Container with the Input File
-Start the container with the generated ```inputFile```:
-```bash
+Start the container with the generated ```inputFile``` by mounting it as a volume container from host to container:
+
+here ```pwd``` will be replaced by the full absolute path to ```inputFile```
+
+for eg. I used ```D:/infracloud_assignment/infracloud_assignment1/solution/inputFile```
+
+as I have used windows machine to complete this task
+```sh
 docker run -d --name csvserver -v "$(pwd)/inputFile:/csvserver/inputdata" infracloudio/csvserver:latest
 ```
 
-### Step 4: Verify the Application
+### Step 4: Verify Application and Port
 Access the container to find the listening port:
-```bash
-docker exec -it csvserver sh
+```sh
+docker exec -it csvserver sh  
 netstat -tuln
 ```
-found the application is rnning on port 9300
+found the application is rnning on port ```9300```
 
 Stop and delete the container:
 ```sh
 docker stop csvserver
 docker rm csvserver
 ```
+
 ### Step 5: Run the Application with Environment Variables
-Run the container with CSVSERVER_BORDER set to Orange:
+Restarted the container with ```CSVSERVER_BORDER=Orange``` and mapped it to port 9393
+
 ```sh
 docker run -d --name csvserver -v "$(pwd)/inputFile:/csvserver/inputdata" -e CSVSERVER_BORDER=Orange -p 9393:9300 infracloudio/csvserver:latest
 ```
-Verify the application at [http://localhost:9393](http://localhost:9393).
+
+Now, the application at [http://localhost:9393](http://localhost:9393).
 
 ### Step 6: Save Required Files
-Save outputs:
+The following output files were generated and saved:
 ```bash
-# Command used to run the container
-echo "docker run -d --name csvserver -v \"\$(pwd)/inputFile:/csvserver/inputdata\" -e CSVSERVER_BORDER=Orange -p 9393:9393 infracloudio/csvserver:latest" > part-1-cmd
+# creting file for Command used to run the container
+echo "docker run -d --name csvserver -v D:/infracloud_assignment/infracloud_assignment1/solution/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER=Orange infracloudio/csvserver:latest" > part-1-cmd 
 
 # Raw application output
 curl -o part-1-output http://localhost:9393/raw
@@ -70,8 +81,8 @@ curl -o part-1-output http://localhost:9393/raw
 docker logs csvserver >& part-1-logs
 ```
 
-Files saved:
-
+### Files saved:
+Soltution for Part I of task:
 ```gencsv.sh```
 ```inputFile```
 ```part-1-cmd```
