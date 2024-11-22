@@ -25,6 +25,10 @@ The container failed due to a missing input file (```inputFile```) with comma-se
 ```error while reading the file "/csvserver/inputdata": open /csvserver/inputdata: no such file or directory```
 
 ### Step 2: Generating the Input File
+
+```sh
+cd solution
+```
 To overcome this error Create a script ```gencsv.sh``` to generate the required ```inputFile```. The script takes two arguments: start index and end index, and generates a CSV file with random values.
 
 Following commands are for Making the script executable and generate the file:
@@ -51,7 +55,7 @@ Access the container to find the listening port:
 docker exec -it csvserver sh  
 netstat -tuln
 ```
-found the application is rnning on port ```9300```
+found the application is running on port ```9300```
 
 Stop and delete the container:
 ```sh
@@ -113,20 +117,20 @@ docker-compose up -d
 ```
 Now, the application at [http://localhost:9393](http://localhost:9393).
 
-### Step 3: Update ```docker-compose.yaml```
+## Part III: Prometheus Integration
+### Step 1: Update ```docker-compose.yaml```
 Add Prometheus configuration:
 
 ```sh
   prometheus:
     image: prom/prometheus:v2.45.2
-    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 ```
 
-### Step 4: Create ```prometheus.yaml```
+### Step 2: Create ```prometheus.yaml```
 Create a Prometheus configuration file:
 
 ```sh
@@ -146,7 +150,7 @@ docker-compose up -d
 ```
 Now, Prometheus can be accessible at [http://localhost:9090](http://localhost:9090).
 
-## Files Included as solution of Part II of task
+## Files Included as solution of Part II and Part III of task
 The following files are present in the solution directory:
 
 ```gencsv.sh```
@@ -159,4 +163,4 @@ The following files are present in the solution directory:
 ```prometheus.yml```
 
 ## Conclusion
-By following this guide, you can set up the ```csvserver``` application and integrate it with Prometheus for monitoring. Ensure all steps are executed sequentially, and all required files are in the ```solution``` directory for replication.
+This solution provides a complete setup of the ```csvserver``` application and integrate it with Prometheus for monitoring.Please, Ensure all steps are executed sequentially, and all required files are in the ```solution``` directory.
