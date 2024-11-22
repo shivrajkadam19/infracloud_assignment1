@@ -6,8 +6,8 @@ services:
       - "9393:9300"
     volumes:
       - ./inputFile:/csvserver/inputdata
-    environment:
-      - CSVSERVER_BORDER=Orange
+    env_file:
+      - csvserver.env
   prom-server:
     image: prom/prometheus:v2.45.2
     ports:
