@@ -140,7 +140,7 @@ global:
 scrape_configs:
   - job_name: "csvserver"
     static_configs:
-      - targets: ["csvserver:9393"]
+      - targets: ["csvserver:9300"]
 ```
 
 ### Step 3: Verify Prometheus
