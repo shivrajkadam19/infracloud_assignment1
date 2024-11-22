@@ -9,8 +9,8 @@ docker pull infracloudio/csvserver:latest
 docker pull prom/prometheus:v2.45.2
 ```
 
-## Part I: CSVServer Deployment
-### Step 1: Run the CSVServer Container
+## Part I: csverver Deployment
+### Step 1: Run the csverver Container
 Attempted to run the csvserver container:
 ```sh
 docker run -d --name csvserver infracloudio/csvserver:latest
@@ -92,7 +92,8 @@ Soltution for Part I of task:
 ## Part II: Docker Compose Setup
 
 ### Step 1: Create ```docker-compose.yaml```
-Create a ```docker-compose.yaml``` file for the application:
+Created a ```docker-compose.yaml``` file to manage the application.
+File Contents:
 ```sh
 services:
   csvserver:
@@ -110,10 +111,9 @@ Run the setup:
 ```sh
 docker-compose up -d
 ```
+Now, the application at [http://localhost:9393](http://localhost:9393).
 
-Verify the application at [http://localhost:9393](http://localhost:9393).
-## Part III: Prometheus Integration
-### Step 1: Update ```docker-compose.yaml```
+### Step 3: Update ```docker-compose.yaml```
 Add Prometheus configuration:
 
 ```sh
@@ -125,7 +125,8 @@ Add Prometheus configuration:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 ```
-### Step 2: Create prometheus.yml
+
+### Step 4: Create ```prometheus.yaml```
 Create a Prometheus configuration file:
 
 ```sh
@@ -137,14 +138,15 @@ scrape_configs:
     static_configs:
       - targets: ["csvserver:9393"]
 ```
+
 ### Step 3: Verify Prometheus
-Run the updated setup:
+Run the updated setup by using command:
 ```sh
 docker-compose up -d
 ```
-Access Prometheus at [http://localhost:9090](http://localhost:9090). Query csvserver_records and verify the graph.
+Now, Prometheus can be accessible at [http://localhost:9090](http://localhost:9090).
 
-## Files Included
+## Files Included as solution of Part II of task
 The following files are present in the solution directory:
 
 ```gencsv.sh```
