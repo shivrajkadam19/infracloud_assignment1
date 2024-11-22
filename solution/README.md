@@ -21,6 +21,7 @@ docker logs csvserver
 ```
 Issue Found:
 The container failed due to a missing input file (```inputFile```) with comma-separated values.
+
 ```error while reading the file "/csvserver/inputdata": open /csvserver/inputdata: no such file or directory```
 
 ### Step 2: Generating the Input File
@@ -35,10 +36,11 @@ chmod +x gencsv.sh
 ### Step 3: Run the Container with the Input File
 Start the container with the generated ```inputFile``` by mounting it as a volume container from host to container:
 
-here ```pwd``` will be the full absolute path to ```inputFile```
-for eg. i used ```D:/infracloud_assignment/infracloud_assignment1/solution/inputFile```
+here ```pwd``` will be replaced by the full absolute path to ```inputFile```
 
-as i have used windows machine to complete this task
+for eg. I used ```D:/infracloud_assignment/infracloud_assignment1/solution/inputFile```
+
+as I have used windows machine to complete this task
 ```sh
 docker run -d --name csvserver -v "$(pwd)/inputFile:/csvserver/inputdata" infracloudio/csvserver:latest
 ```
@@ -70,7 +72,7 @@ Now, the application at [http://localhost:9393](http://localhost:9393).
 The following output files were generated and saved:
 ```bash
 # creting file for Command used to run the container
-echo docker run -d --name csvserver -v D:/infracloud_assignment/infracloud_assignment1/solution/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER=Orange infracloudio/csvserver:latest > part-1-cmd
+echo "docker run -d --name csvserver -v D:/infracloud_assignment/infracloud_assignment1/solution/inputFile:/csvserver/inputdata -p 9393:9300 -e CSVSERVER_BORDER=Orange infracloudio/csvserver:latest" > part-1-cmd 
 
 # Raw application output
 curl -o part-1-output http://localhost:9393/raw
